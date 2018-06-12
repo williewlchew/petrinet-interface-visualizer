@@ -21,7 +21,7 @@ class Molecule
     private:
        //attributes
        std::string name;
-       bool input;
+       bool isInput;
 
        //other stuff
 };
@@ -38,8 +38,7 @@ class Events
         std::string getName();
 
         //attributes
-        std::vector<Molecule*> inputs;
-        std::vector<Molecule*> outputs;
+        std::vector<Molecule*> molecules;
 
     private:
         std::string name;

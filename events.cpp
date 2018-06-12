@@ -6,7 +6,7 @@
 Molecule::Molecule()
 {
     name="New Molecule";
-    input = true;
+    isInput = true;
 }
 
 Molecule::~Molecule()
@@ -23,11 +23,11 @@ std::string Molecule::getName(){
 }
 
 void Molecule::setInput(bool inputInput){
-    input = inputInput;
+    isInput = inputInput;
 }
 
 bool Molecule::getInput(){
-    return input;
+    return isInput;
 }
 
 /*
@@ -36,10 +36,18 @@ bool Molecule::getInput(){
 
 Events::Events()
 {
-    name = "";
+    name = "New Event";
 }
 
 Events::~Events()
 {
 
+}
+
+void Events::setName(std::string nameInput){
+    name = nameInput;
+}
+
+std::string Events::getName(){
+    return name;
 }

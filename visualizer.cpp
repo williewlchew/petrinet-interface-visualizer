@@ -24,7 +24,7 @@ Molecule* VisualMolecule::getRoot(){
 void VisualMolecule::updateMolecule(){
 
     //load the image into a pixmap
-    QPixmap* pix = new QPixmap(":/TFsnip.png");
+    QPixmap* pix = new QPixmap(":/snip1.png");
     *pix = pix->scaled(150, 100, Qt::IgnoreAspectRatio, Qt::FastTransformation);
 
     QPainter painter;
@@ -39,7 +39,6 @@ void VisualMolecule::updateMolecule(){
     this->show();
 }
 
-
 /*
  * Visualizer
  */
@@ -53,12 +52,15 @@ Visualizer::Visualizer(QWidget *parent, Events* eventPtr) : QFrame(parent)
     setAcceptDrops(true);
 
     rootEvent = eventPtr;
-    /*
-     * loop through inputs
+    /* Read in the event:
+     *  loop through molecules
      *      create visuals for each
-     * loop though outputs
-     *      visuals for each
      */
+
+    //make the event object
+    visualEvent = new QLabel(this);
+    visualEvent->setAttribute(Qt::WA_DeleteOnClose);
+    updateEvent();
 }
 
 Visualizer::~Visualizer(){
@@ -174,6 +176,26 @@ void Visualizer::mousePressEvent(QMouseEvent *event)
 }
 
   // Functions
+//update the visual representation of the event
+void Visualizer::updateEvent(){
+
+    //load the image into a pixmap
+    QPixmap* pix = new QPixmap(":/snip2.png");
+    *pix = pix->scaled(150, 100, Qt::IgnoreAspectRatio, Qt::FastTransformation);
+
+    QPainter painter;
+    painter.begin(pix);
+    QString evName = QString::fromStdString(rootEvent->getName());
+    painter.drawText(pix->rect(),Qt::AlignCenter, evName);
+    painter.end();
+
+    //make it viewable
+    visualEvent->setPixmap(*pix);
+    delete pix;
+    visualEvent->move(this->width()/2 - 75, this->width()/2 - 50);
+    visualEvent->show();
+}
+
 //make a new molecule
 VisualMolecule* Visualizer::newMolecule(){
 
@@ -183,7 +205,7 @@ VisualMolecule* Visualizer::newMolecule(){
      */
 
     Molecule* newMol = new Molecule();
-    rootEvent->inputs.push_back(newMol);
+    rootEvent->molecules.push_back(newMol);
     VisualMolecule *visualMol = new VisualMolecule(this, newMol);
     visualMol->setAttribute(Qt::WA_DeleteOnClose);
 

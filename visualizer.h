@@ -35,6 +35,7 @@ public:
 
     //attributes
     Events* rootEvent; //~used to read in the molecules
+    QLabel* visualEvent;
 
     //constructor
     Visualizer();
@@ -52,6 +53,7 @@ private:
 
     //methods
     void editMolecule(VisualMolecule* mol);
+    void updateEvent();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event) override;

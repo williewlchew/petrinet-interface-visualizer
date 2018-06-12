@@ -1,5 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="">
-   <file>TFsnip.png</file>
+   <file>snip1.png</file>
+   <file>snip2.png</file>
 </qresource>
 </RCC>
