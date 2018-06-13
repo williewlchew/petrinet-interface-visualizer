@@ -55,6 +55,7 @@ bool VisualMolecule::getIsMoveable(){
     return isMovable;
 }
 
+
 /*
  * Visualizer
  */
@@ -68,17 +69,7 @@ Visualizer::Visualizer(QWidget *parent, Events* eventPtr) : QFrame(parent)
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
     setAcceptDrops(true);
 
-    rootEvent = eventPtr;
-    /* Read in the event:
-     *  loop through molecules
-     *      create visuals for each
-     */
-
-    //make the event object
-    visualEvent = new VisualMolecule(this);
-    visualEvent->setIsMovable(false);
-    visualEvent->setAttribute(Qt::WA_DeleteOnClose);
-    updateEvent();
+    LoadNewEvent(eventPtr);
 }
 
 Visualizer::~Visualizer(){
@@ -152,7 +143,7 @@ void Visualizer::mousePressEvent(QMouseEvent *event)
 
     //rightclicked on an object
     else if (event->button()==Qt::RightButton) {
-        if(!child->rootMolecule){
+        if(!child->getRoot()){
             editEvent();
         }
         else{
@@ -202,6 +193,25 @@ void Visualizer::mousePressEvent(QMouseEvent *event)
 }
 
   // Functions
+void Visualizer::LoadNewEvent(Events* newEvent){
+    /*
+     * Make a new event structure
+     * set it as the current event
+     */
+
+    rootEvent = newEvent;
+    /* Read in the event:
+     *  loop through molecules
+     *      create visuals for each
+     */
+
+    //make the event object
+    visualEvent = new VisualMolecule(this);
+    visualEvent->setIsMovable(false);
+    visualEvent->setAttribute(Qt::WA_DeleteOnClose);
+    updateEvent();
+}
+
 //update the visual representation of the event
 void Visualizer::updateEvent(){
 
@@ -227,12 +237,12 @@ void Visualizer::editEvent(){
     //***OPTIMIZE FOR EVENTS
 
     //makes a second dialogbox
-    VisualEditor* newEditor = new VisualEditor(this, visualMol->getRoot());
+    VisualEditor* newEditor = new VisualEditor(this);
     newEditor->fillForm();//fill in the box with current information
     newEditor->show();
 
     //connect the save button with updateMolecule()
-    connect(newEditor, SIGNAL(changedId()), visualMol, SLOT(updateMolecule()));
+    connect(newEditor, SIGNAL(changedId()), this, SLOT(updateEvent()));
 }
 
 //make a new molecule

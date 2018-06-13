@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include "events.h"
 
 /*
@@ -14,8 +13,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     Events* newEv = new Events();
     //testing
 
-    newVisualizer = new Visualizer(this, newEv);
-    ui->dragFrame->addWidget(newVisualizer);
+    visualizer = new Visualizer(this, newEv);
+    ui->dragFrame->addWidget(visualizer);
 }
 
 MainWindow::~MainWindow()
@@ -30,7 +29,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_addStateButton_clicked()
 {
     //AddState();
-    newVisualizer->newMolecule();
+    visualizer->newMolecule();
 }
 
 /*

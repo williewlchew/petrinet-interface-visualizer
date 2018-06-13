@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-
 #include "visualizer.h"
 
 namespace Ui {
@@ -22,7 +21,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Visualizer* newVisualizer;
+    Visualizer* visualizer;
 
     void AddState();
 };

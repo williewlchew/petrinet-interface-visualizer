@@ -49,6 +49,7 @@ public:
     //methods
     VisualMolecule* newMolecule();
     VisualMolecule* newMolecule(Molecule* mol);
+    void LoadNewEvent(Events* newEvent);
 
 private:
 
