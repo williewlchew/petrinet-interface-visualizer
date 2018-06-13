@@ -12,15 +12,19 @@ class VisualMolecule : public QLabel {
 
     public :
         //constuctors
-        VisualMolecule(QWidget* parent, Molecule* root); //builds the molecule based on code put in the name; look for ','
+        VisualMolecule(QWidget* parent);
+        VisualMolecule(QWidget* parent, Molecule* root);
         virtual ~VisualMolecule();
 
         //getter
         Molecule* getRoot();
+        void setIsMovable(bool moveInput);
+        bool getIsMoveable();
 
     private:
         //attributes
         Molecule* rootMolecule;
+        bool isMovable;
 
     public slots:
         void updateMolecule();
@@ -35,7 +39,7 @@ public:
 
     //attributes
     Events* rootEvent; //~used to read in the molecules
-    QLabel* visualEvent;
+    VisualMolecule* visualEvent;
 
     //constructor
     Visualizer();
@@ -53,6 +57,7 @@ private:
 
     //methods
     void editMolecule(VisualMolecule* mol);
+    void editEvent();
     void updateEvent();
 
 protected:

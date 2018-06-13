@@ -7,6 +7,11 @@
  * VisualMolecule
  */
 
+VisualMolecule::VisualMolecule(QWidget *parent): QLabel(parent)
+{
+    rootMolecule = nullptr;
+}
+
 VisualMolecule::VisualMolecule(QWidget *parent, Molecule* root): QLabel(parent)
 {
     rootMolecule = root;
@@ -22,6 +27,9 @@ Molecule* VisualMolecule::getRoot(){
 }
 
 void VisualMolecule::updateMolecule(){
+
+    //initialize variable
+    isMovable = true;
 
     //load the image into a pixmap
     QPixmap* pix = new QPixmap(":/snip1.png");
@@ -39,6 +47,14 @@ void VisualMolecule::updateMolecule(){
     this->show();
 }
 
+void VisualMolecule::setIsMovable(bool moveInput){
+    isMovable = moveInput;
+}
+
+bool VisualMolecule::getIsMoveable(){
+    return isMovable;
+}
+
 /*
  * Visualizer
  */
@@ -46,6 +62,7 @@ Visualizer::Visualizer(QWidget *parent, Events* eventPtr) : QFrame(parent)
 {
     //initialize
     draggedMolecule = nullptr;
+
     //setup widget
     setMinimumSize(500, 200);
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
@@ -58,7 +75,8 @@ Visualizer::Visualizer(QWidget *parent, Events* eventPtr) : QFrame(parent)
      */
 
     //make the event object
-    visualEvent = new QLabel(this);
+    visualEvent = new VisualMolecule(this);
+    visualEvent->setIsMovable(false);
     visualEvent->setAttribute(Qt::WA_DeleteOnClose);
     updateEvent();
 }
@@ -127,51 +145,59 @@ void Visualizer::dropEvent(QDropEvent *event)
 void Visualizer::mousePressEvent(QMouseEvent *event)
 {
     VisualMolecule* child = static_cast<VisualMolecule*>(childAt(event->pos()));
+
+    //mouse event on nothing
     if (!child)
         return;
 
-    QPixmap pixmap = *child->pixmap();
-
-    /**
-        construct a QByteArray and package up the details using a QDataStream
-            itemData is an array of bytes
-            the stream puts pixmap information into item data
-            stored in event's mime data
-    **/
-    QByteArray itemData;
-    QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-    draggedMolecule = child->getRoot();
-    dataStream << pixmap << QPoint(event->pos() - child->pos());
-
-    QMimeData *mimeData = new QMimeData;
-    mimeData->setData("molecule/", itemData);
-
-    QDrag *drag = new QDrag(this);
-    drag->setMimeData(mimeData);
-    drag->setPixmap(pixmap);
-    drag->setHotSpot(event->pos() - child->pos());
-
-    QPixmap tempPixmap = pixmap;
-    QPainter painter;
-    painter.begin(&tempPixmap);
-    painter.fillRect(pixmap.rect(), QColor(250, 250, 250, 150));
-    painter.end();
-
-    child->setPixmap(tempPixmap);
-
-    if (event->button()==Qt::RightButton) {
-        editMolecule(child);
-        child->show();
-        child->setPixmap(pixmap);
+    //rightclicked on an object
+    else if (event->button()==Qt::RightButton) {
+        if(!child->rootMolecule){
+            editEvent();
+        }
+        else{
+            editMolecule(child);
+            child->show();
+        }
     }
 
-    else if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction) {
-        child->close();
-    }
+    //drag event
+    else if (child->getIsMoveable()){
+        /**
+            construct a QByteArray and package up the details using a QDataStream
+                itemData is an array of bytes
+                the stream puts pixmap information into item data
+                stored in event's mime data
+        **/
+        QPixmap pixmap = *child->pixmap();
 
-    else {
-        child->show();
-        child->setPixmap(pixmap);
+        QByteArray itemData;
+        QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+        draggedMolecule = child->getRoot();
+        dataStream << pixmap << QPoint(event->pos() - child->pos());
+
+        QMimeData *mimeData = new QMimeData;
+        mimeData->setData("molecule/", itemData);
+
+        QDrag *drag = new QDrag(this);
+        drag->setMimeData(mimeData);
+        drag->setPixmap(pixmap);
+        drag->setHotSpot(event->pos() - child->pos());
+
+        QPixmap tempPixmap = pixmap;
+        QPainter painter;
+        painter.begin(&tempPixmap);
+        painter.fillRect(pixmap.rect(), QColor(250, 250, 250, 150));
+        painter.end();
+
+        child->setPixmap(tempPixmap);
+
+        if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction)
+            child->close();
+        else {
+            child->show();
+            child->setPixmap(pixmap);
+        }
     }
 }
 
@@ -194,6 +220,19 @@ void Visualizer::updateEvent(){
     delete pix;
     visualEvent->move(this->width()/2 - 75, this->width()/2 - 50);
     visualEvent->show();
+}
+
+void Visualizer::editEvent(){
+
+    //***OPTIMIZE FOR EVENTS
+
+    //makes a second dialogbox
+    VisualEditor* newEditor = new VisualEditor(this, visualMol->getRoot());
+    newEditor->fillForm();//fill in the box with current information
+    newEditor->show();
+
+    //connect the save button with updateMolecule()
+    connect(newEditor, SIGNAL(changedId()), visualMol, SLOT(updateMolecule()));
 }
 
 //make a new molecule
