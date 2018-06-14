@@ -29,13 +29,21 @@ SOURCES += \
         mainwindow.cpp \
     visualizer.cpp \
     events.cpp \
-    visualeditor.cpp
+    visualeditor.cpp \
+    molecule.cpp \
+    moleculelist.cpp \
+    event.cpp \
+    eventlist.cpp
 
 HEADERS += \
         mainwindow.h \
     visualizer.h \
     events.h \
-    visualeditor.h
+    visualeditor.h \
+    molecule.h \
+    moleculelist.h \
+    event.h \
+    eventlist.h
 
 FORMS += \
         mainwindow.ui \
