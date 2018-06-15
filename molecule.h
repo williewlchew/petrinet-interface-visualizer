@@ -1,8 +1,9 @@
 ////////////////////////////////////////////////////////////////////
 /*
  * Molecule object:
- *  base data : name
- *  will have : AttributeList, encode/decode methods
+ *  -Stores base data and attributes of a molecule
+ *  -Has methods of how to draw the molecule
+ *  -Has methods on encoding and decoding the molecule
  */
 ////////////////////////////////////////////////////////////////////
 #ifndef MOLECULE_H

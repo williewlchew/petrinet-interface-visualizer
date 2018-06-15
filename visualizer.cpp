@@ -3,8 +3,114 @@
 
 #include <QDebug>
 
+Visualizer::Visualizer(QWidget *parent) : QFrame(parent)
+{
+    //setup widget
+    setMinimumSize(500, 200);
+    setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
+    setAcceptDrops(true);
+}
+
+Visualizer::~Visualizer(){
+
+}
+
+void Visualizer::mousePressEvent(QMouseEvent *event)
+{
+    QLabel* child = static_cast<QLabel*>(childAt(event->pos()));
+
+    //mouse event on nothing
+    if (!child)
+        return;
+
+    //rightclicked on an object
+    else if (event->button()==Qt::RightButton) {
+        if(!child->getRoot()){
+            editEvent();
+        }
+        else{
+            editMolecule(child);
+            child->show();
+        }
+    }
+
+    //drag event
+    else if (child->getIsMoveable()){
+        QPixmap pixmap = *child->pixmap();
+
+        QByteArray itemData;
+        QDataStream dataStream(&itemData, QIODevice::WriteOnly);
+        dataStream << pixmap << QPoint(event->pos() - child->pos());
+
+        QMimeData *mimeData = new QMimeData;
+        mimeData->setData("label/", itemData);
+
+        QDrag *drag = new QDrag(this);
+        drag->setMimeData(mimeData);
+        drag->setPixmap(pixmap);
+        drag->setHotSpot(event->pos() - child->pos());
+
+        QPixmap tempPixmap = pixmap;
+        QPainter painter;
+        painter.begin(&tempPixmap);
+        painter.fillRect(pixmap.rect(), QColor(250, 250, 250, 150));
+        painter.end();
+
+        child->setPixmap(tempPixmap);
+
+        if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction)
+            child->close();
+        else {
+            child->show();
+            child->setPixmap(pixmap);
+        }
+    }
+}
+
+void Visualizer::dragEnterEvent(QDragEnterEvent *event)
+{
+    if (event->mimeData()->hasFormat("label/")) {
+        if (event->source() == this) {
+            event->setDropAction(Qt::MoveAction);
+            event->accept();
+        } else {
+            event->acceptProposedAction();
+        }
+    } else {
+        event->ignore();
+    }
+}
+
+void Visualizer::dragMoveEvent(QDragMoveEvent *event)
+{
+    if (event->mimeData()->hasFormat("label/")) {
+        if (event->source() == this) {
+            event->setDropAction(Qt::MoveAction);
+            event->accept();
+        } else {
+            event->acceptProposedAction();
+        }
+    } else {
+        event->ignore();
+    }
+}
+
+void Visualizer::dropEvent(QDropEvent *event)
+{
+    if (event->mimeData()->hasFormat("label/")) {
+        //extract info from event
+        QByteArray itemData = event->mimeData()->data("label/");
+        QDataStream dataStream(&itemData, QIODevice::ReadOnly);
+        QPixmap pixmap;
+        QPoint offset;
+        dataStream >> pixmap >> offset;
+
+        /*
+         * Tell object to draw themselves in new area
+         */
+}
 /*
- * VisualMolecule
+ * OLD CODE
  */
 
 VisualMolecule::VisualMolecule(QWidget *parent): QLabel(parent)
@@ -47,7 +153,8 @@ void VisualMolecule::updateMolecule(){
     this->show();
 }
 
-void VisualMolecule::setIsMovable(bool moveInput){
+void VisualMolecule::setIsMovable(bool moveInput)
+{
     isMovable = moveInput;
 }
 

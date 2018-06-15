@@ -1,3 +1,11 @@
+////////////////////////////////////////////////////////////
+/*
+ * The Visualizer
+ *  -canvas in which the objects draw themselves on
+ *  -proceses mouse events and relays the event data to the respective objects
+ *  -know how to accesss any object that it represents
+ */
+////////////////////////////////////////////////////////////
 #ifndef DRAGWIDGET_H
 #define DRAGWIDGET_H
 

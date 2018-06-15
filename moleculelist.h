@@ -1,3 +1,10 @@
+//////////////////////////////////////////////////////////////////////////////
+/// Molecule List
+///     -Has the container of the list of molecules
+///     -Has methods on how to manipulate the list
+///     -Coordinates drawing the list of molecules
+///     -Can encode/decode a sequnce of molecules
+//////////////////////////////////////////////////////////////////////////////
 #ifndef MOLECULELIST_H
 #define MOLECULELIST_H
 

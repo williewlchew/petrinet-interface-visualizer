@@ -1,3 +1,10 @@
+//////////////////////////////////////////////
+/*
+ * Visual Editor
+ *  -lets users interact with object attributes
+ *  -tells objects which attribute to change
+ */
+//////////////////////////////////////////////
 #ifndef VISUALEDITOR_H
 #define VISUALEDITOR_H
 
