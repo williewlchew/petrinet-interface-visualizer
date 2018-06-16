@@ -10,6 +10,12 @@
     <height>607</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -21,7 +27,7 @@
        <number>0</number>
       </property>
       <property name="sizeConstraint">
-       <enum>QLayout::SetMaximumSize</enum>
+       <enum>QLayout::SetDefaultConstraint</enum>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -44,6 +50,12 @@
       </item>
       <item>
        <widget class="QPushButton" name="addStateButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="text">
          <string>Add a New State</string>
         </property>
@@ -73,7 +85,7 @@
     <item>
      <layout class="QVBoxLayout" name="dragFrame">
       <property name="sizeConstraint">
-       <enum>QLayout::SetMaximumSize</enum>
+       <enum>QLayout::SetMinimumSize</enum>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -91,7 +103,7 @@
      <x>0</x>
      <y>0</y>
      <width>821</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

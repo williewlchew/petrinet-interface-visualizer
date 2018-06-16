@@ -26,11 +26,15 @@ class MoleculeList
         void Pop(Molecule* item);
 
         //Visual
-        QLabel* DrawMoleculeList(QWidget* parent);
+        QLayout* DrawMoleculeList(QWidget* parent);
 
    private:
         //Base Data
         std::vector<Molecule*> list;
+
+        //Helpers
+        int GetIndex(Molecule* item);
+
 };
 
 #endif // MOLECULELIST_H

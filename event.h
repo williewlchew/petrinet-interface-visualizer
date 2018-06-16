@@ -18,9 +18,11 @@ class Event
         Event();
         ~Event();
 
+        
         //Base Data
         MoleculeList inputs;
         MoleculeList outputs;
+        
         void setName(std::string nameInput);
         std::string getName();
 
@@ -28,6 +30,7 @@ class Event
         QLabel* DrawEvent(QFrame* parent);
         void editEvent(QFrame* parent);
 
+        
     private:
         //Base Data
         std::string name;

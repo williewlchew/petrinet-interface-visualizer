@@ -29,7 +29,7 @@ QLabel* Event::DrawEvent(QFrame* parent)
     QPainter painter;
     painter.begin(pix);
     QString evName = QString::fromStdString(rootEvent->getName());
-    painter.drawText(pix->rect(),Qt::AlignCenter, evName);
+    painter.drawText(pix->rect(),Qt::AlignCenter, name);
     painter.end();
 
     //make it viewable
