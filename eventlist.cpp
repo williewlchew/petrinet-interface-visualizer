@@ -26,19 +26,19 @@ Event* EventList::Get(int index)
     return list[index];
 }
 
-void Push(Event* item)
+void EventList::Push(Event* item)
 {
     list.push_back(item);
 }
 
-void Pop(Event* item)
+void EventList::Pop(Event* item)
 {
     int removeIndex = GetIndex(item);
     list.erase(list.begin() + removeIndex);
     delete item;
 }
 
-int GetIndex(Event* item)
+int EventList::GetIndex(Event* item)
 {
     for(int i = 0; i < list.size(); i++)
     {

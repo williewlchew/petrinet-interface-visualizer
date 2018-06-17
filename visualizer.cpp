@@ -1,10 +1,8 @@
 ////////////////////////////////////////////////////////////////////
 #include "visualizer.h"
-#include "events.h"
-
 #include <QDebug>
 ///////////////////////////////////////////////////////////////////
-Visualizer::Visualizer(QWidget *parent = nullptr, Event* eventPtr = nullptr)
+Visualizer::Visualizer(QWidget *parent, Event* eventPtr)
 {
     event = eventPtr;
     updateVisualizer();
@@ -17,8 +15,11 @@ Visualizer::~Visualizer()
 
 void Visualizer::updateVisualizer()
 {
+    QBoxLayout* inputList = event->inputs.DrawMoleculeList(this);
+    QLabel* eventLabel = event->DrawEvent(this);
+    QBoxLayout* outputList = event->outputs.DrawMoleculeList(this);
 
-    event->inputs->DrawMoleculeList();
+    //move them to the optimal spots
 }
 ///////////////////////////////////////////////////////////////////
 /// OLD CODE

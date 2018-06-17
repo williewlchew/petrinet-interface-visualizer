@@ -25,7 +25,7 @@ class Molecule
         std::string getName();
 
         //Visual
-        QLabel* DrawMolecule(QWidget* parent);
+        QLabel* DrawMolecule(QFrame* parent);
 
     private:
        //Base Data

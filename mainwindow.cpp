@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "events.h"
+#include "eventlist.h"
 
 /*
  * Constructors and destructor
@@ -9,12 +9,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 {
     ui->setupUi(this);
 
-    //testing
-    Events* newEv = new Events();
-    //testing
+    //CODE BELOW IS IN ITS CURRENT STATE FOR TESTING PURPOSES
+    EventList* eventList = new EventList();
+    eventList->Push(new Event());
+    eventList->Get(0)->inputs.Push(new Molecule);
+    eventList->Get(0)->outputs.Push(new Molecule);
 
-    visualizer = new Visualizer(this, newEv);
+    visualizer = new Visualizer(this, eventList->Get(0));
     ui->dragFrame->addWidget(visualizer);
+    visualizer->updateVisualizer();
 }
 
 MainWindow::~MainWindow()
@@ -25,11 +28,10 @@ MainWindow::~MainWindow()
 /*
  * Slot and signals
  */
-
 void MainWindow::on_addStateButton_clicked()
 {
     //AddState();
-    visualizer->newMolecule();
+    //visualizer->newMolecule();
 }
 
 /*

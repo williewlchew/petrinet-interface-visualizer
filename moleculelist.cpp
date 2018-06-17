@@ -5,40 +5,41 @@ MoleculeList::MoleculeList()
 
 }
 
-MoleculeList::MoleculeList()
+MoleculeList::~MoleculeList()
 {
 
 }
 
-Molecule* Get(std::string name)
+Molecule* MoleculeList::Get(std::string name)
 {
-    for(Event* i : list)
+    for(Molecule* i : list)
     {
         if(i->getName().compare(name) == 0)
         {
             return i;
         }
     }
+    return nullptr;
 }
 
-Molecule* Get(int index)
+Molecule* MoleculeList::Get(int index)
 {
     return list[index];
 }
 
-void Push(Molecule* item)
+void MoleculeList::Push(Molecule* item)
 {
     list.push_back(item);
 }
 
-void Pop(Molecule* item)
+void MoleculeList::Pop(Molecule* item)
 {
     int removeIndex = GetIndex(item);
     list.erase(list.begin() + removeIndex);
     delete item;
 }
 
-int GetIndex(Molecule* item)
+int MoleculeList::GetIndex(Molecule* item)
 {
     for(int i = 0; i < list.size(); i++)
     {
@@ -46,16 +47,17 @@ int GetIndex(Molecule* item)
             return i;
         }
     }
+    return -1;
 }
 
 
-QHBoxLayout* DrawMoleculeList(QFrame* parent)
+QHBoxLayout* MoleculeList::DrawMoleculeList(QFrame* parent)
 {
     QHBoxLayout* newLayout = new QHBoxLayout(parent);
 
     for(Molecule* mol : list)
     {
-        QLabel molLabel = mol->DrawMolecule(newLayout);
+        QLabel* molLabel = mol->DrawMolecule(parent);
         newLayout->addWidget(molLabel);
     }
 

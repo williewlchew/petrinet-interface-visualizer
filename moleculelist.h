@@ -26,7 +26,7 @@ class MoleculeList
         void Pop(Molecule* item);
 
         //Visual
-        QLayout* DrawMoleculeList(QWidget* parent);
+        QHBoxLayout* DrawMoleculeList(QFrame* parent);
 
    private:
         //Base Data

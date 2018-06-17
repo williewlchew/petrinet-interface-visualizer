@@ -28,7 +28,6 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     visualizer.cpp \
-    events.cpp \
     visualeditor.cpp \
     molecule.cpp \
     moleculelist.cpp \
@@ -38,7 +37,6 @@ SOURCES += \
 HEADERS += \
         mainwindow.h \
     visualizer.h \
-    events.h \
     visualeditor.h \
     molecule.h \
     moleculelist.h \

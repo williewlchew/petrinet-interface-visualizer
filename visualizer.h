@@ -28,7 +28,7 @@ class Visualizer : public QFrame
 
     public slots:
         void updateVisualizer();
-}
+};
 ////////////////////////////////////////////////////////////
 //// OLD CODE
 //class VisualMolecule : public QLabel {

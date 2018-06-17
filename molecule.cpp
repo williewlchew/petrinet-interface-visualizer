@@ -29,15 +29,15 @@ QLabel* Molecule::DrawMolecule(QFrame* parent)
 
     QPainter painter;
     painter.begin(pix);
-    QString evName = QString::fromStdString(rootEvent->getName());
-    painter.drawText(pix->rect(),Qt::AlignCenter, name);
+    painter.drawText(pix->rect(),Qt::AlignCenter, QString::fromStdString(name));
     painter.end();
 
     //make it viewable
-    QLabel* newLable = new QLabel(parent);
+    QLabel* newLabel = new QLabel(parent);
     newLabel->setPixmap(*pix);
     delete pix;
-    newLable->show();
+    newLabel->show();
+    newLabel->setAttribute(Qt::WA_DeleteOnClose);
 
-    return newLable;
+    return newLabel;
 }

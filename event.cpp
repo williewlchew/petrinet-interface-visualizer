@@ -28,29 +28,29 @@ QLabel* Event::DrawEvent(QFrame* parent)
 
     QPainter painter;
     painter.begin(pix);
-    QString evName = QString::fromStdString(rootEvent->getName());
-    painter.drawText(pix->rect(),Qt::AlignCenter, name);
+    painter.drawText(pix->rect(),Qt::AlignCenter,QString::fromStdString(name));
     painter.end();
 
     //make it viewable
-    QLabel* newLable = new QLabel(parent);
+    QLabel* newLabel = new QLabel(parent);
     newLabel->setPixmap(*pix);
     delete pix;
-    newLable->move(parent->width()/2 - 75, parent->height()/2 - 50);
-    newLable->show();
+    newLabel->move(parent->width()/2 - 75, parent->height()/2 - 50);
+    newLabel->show();
+    newLabel->setAttribute(Qt::WA_DeleteOnClose);
 
-    return newLable;
+    return newLabel;
 }
 
 void Event::editEvent(QFrame* parent){
 
-    //***OPTIMIZE FOR EVENTS
+//    //***OPTIMIZE FOR EVENTS
 
-    //makes a second dialogbox
-    VisualEditor* newEditor = new VisualEditor(parent);
-    newEditor->fillForm();//fill in the box with current information
-    newEditor->show();
+//    //makes a second dialogbox
+//    VisualEditor* newEditor = new VisualEditor(parent);
+//    newEditor->fillForm();//fill in the box with current information
+//    newEditor->show();
 
-    //connect the save button with updateMolecule() ****WIP
-    connect(newEditor, SIGNAL(changedId()), parent, SLOT(updateEvent()));
+//    //connect the save button with updateMolecule() ****WIP
+//    connect(newEditor, SIGNAL(changedId()), parent, SLOT(updateEvent()));
 }
