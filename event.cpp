@@ -35,9 +35,9 @@ QLabel* Event::DrawEvent(QFrame* parent)
     QLabel* newLabel = new QLabel(parent);
     newLabel->setPixmap(*pix);
     delete pix;
-    newLabel->move(parent->width()/2 - 75, parent->height()/2 - 50);
-    newLabel->show();
+    newLabel->setAlignment(Qt::AlignCenter);
     newLabel->setAttribute(Qt::WA_DeleteOnClose);
+    newLabel->show();
 
     return newLabel;
 }

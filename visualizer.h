@@ -25,6 +25,10 @@ class Visualizer : public QFrame
 
     private:
         Event* event;
+        QVBoxLayout *layout;
+
+        //helper methods
+        void clearVisualizer();
 
     public slots:
         void updateVisualizer();

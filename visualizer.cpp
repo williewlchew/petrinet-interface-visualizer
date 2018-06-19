@@ -2,8 +2,15 @@
 #include "visualizer.h"
 #include <QDebug>
 ///////////////////////////////////////////////////////////////////
-Visualizer::Visualizer(QWidget *parent, Event* eventPtr)
+Visualizer::Visualizer(QWidget *parent, Event* eventPtr): QFrame(parent)
 {
+    setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
+    setMaximumSize(16777215, 16777215);
+
+    layout = new QVBoxLayout;
+    setLayout(layout);
+
     event = eventPtr;
     updateVisualizer();
 }
@@ -15,11 +22,26 @@ Visualizer::~Visualizer()
 
 void Visualizer::updateVisualizer()
 {
+    clearVisualizer();
+
     QBoxLayout* inputList = event->inputs.DrawMoleculeList(this);
     QLabel* eventLabel = event->DrawEvent(this);
     QBoxLayout* outputList = event->outputs.DrawMoleculeList(this);
 
     //move them to the optimal spots
+    layout->addItem(inputList);
+    layout->addWidget(eventLabel);
+    layout->addItem(outputList);
+}
+
+void Visualizer::clearVisualizer()
+{
+    QLayoutItem* item;
+    while ( ( item = layout->takeAt( 0 ) ) != NULL )
+    {
+        delete item->widget();
+        delete item;
+    }
 }
 ///////////////////////////////////////////////////////////////////
 /// OLD CODE

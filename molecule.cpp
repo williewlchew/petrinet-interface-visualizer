@@ -36,8 +36,9 @@ QLabel* Molecule::DrawMolecule(QFrame* parent)
     QLabel* newLabel = new QLabel(parent);
     newLabel->setPixmap(*pix);
     delete pix;
-    newLabel->show();
+    newLabel->setAlignment(Qt::AlignCenter);
     newLabel->setAttribute(Qt::WA_DeleteOnClose);
+    newLabel->show();
 
     return newLabel;
 }

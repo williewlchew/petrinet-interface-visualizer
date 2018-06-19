@@ -12,8 +12,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //CODE BELOW IS IN ITS CURRENT STATE FOR TESTING PURPOSES
     EventList* eventList = new EventList();
     eventList->Push(new Event());
-    eventList->Get(0)->inputs.Push(new Molecule);
+    eventList->Get(0)->inputs.Push(new Molecule);    eventList->Get(0)->inputs.Get(0)->setName("InputMolecule1");
+    eventList->Get(0)->inputs.Push(new Molecule);    eventList->Get(0)->inputs.Get(1)->setName("InputMolecule2");
     eventList->Get(0)->outputs.Push(new Molecule);
+    eventList->Get(0)->outputs.Get(0)->setName("OutputMolecule");
 
     visualizer = new Visualizer(this, eventList->Get(0));
     ui->dragFrame->addWidget(visualizer);
