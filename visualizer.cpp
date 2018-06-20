@@ -51,7 +51,6 @@ void Visualizer::mousePressEvent(QMouseEvent *QEvent)
     //mouse event on nothing
     if (!child)
     {
-        qDebug() << "Work";
         return;
     }
 //    FOR LATER
@@ -101,7 +100,6 @@ void Visualizer::mousePressEvent(QMouseEvent *QEvent)
 
 void Visualizer::dragEnterEvent(QDragEnterEvent *QEvent)
 {
-    qDebug() << "Works";
     if (QEvent->mimeData()->hasFormat("label/")) {
         if (QEvent->source() == this) {
             QEvent->setDropAction(Qt::MoveAction);
@@ -116,7 +114,6 @@ void Visualizer::dragEnterEvent(QDragEnterEvent *QEvent)
 
 void Visualizer::dragMoveEvent(QDragMoveEvent *QEvent)
 {
-    qDebug() << "Works";
     if (QEvent->mimeData()->hasFormat("label/"))
     {
         if (QEvent->source() == this)
@@ -138,7 +135,6 @@ void Visualizer::dragMoveEvent(QDragMoveEvent *QEvent)
 
 void Visualizer::dropEvent(QDropEvent *QEvent)
 {
-    qDebug() << "Worked00";
     if (QEvent->mimeData()->hasFormat("label/"))
     {
         //extract info from event
@@ -148,7 +144,6 @@ void Visualizer::dropEvent(QDropEvent *QEvent)
         dataStream >> startPosition;
 
         event->processDragAction(startPosition, QEvent->pos() - startPosition, this);
-        qDebug() << "Worked" << startPosition;
 
         if (QEvent->source() == this)
         {
