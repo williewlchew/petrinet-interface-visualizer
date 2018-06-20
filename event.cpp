@@ -1,4 +1,5 @@
 #include "event.h"
+#include <QDebug>
 
 Event::Event()
 {
@@ -53,4 +54,21 @@ void Event::editEvent(QFrame* parent){
 
 //    //connect the save button with updateMolecule() ****WIP
 //    connect(newEditor, SIGNAL(changedId()), parent, SLOT(updateEvent()));
+}
+
+void Event::processDragAction(QPoint startPoint, QPoint endPoint, QFrame* parent)
+{
+    qDebug() << "Workd" << startPoint << endPoint;
+
+    QLabel* sLabel = new QLabel(parent);
+    sLabel->setText(QString("Start"));
+    sLabel->show();
+    sLabel->move(startPoint);
+
+    QLabel* fLabel = new QLabel(parent);
+    fLabel->setText(QString("Finish"));
+    fLabel->show();
+    fLabel->move(endPoint);
+
+    qDebug() << "Workd" << startPoint << endPoint;
 }

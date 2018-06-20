@@ -35,10 +35,10 @@ QLabel* Molecule::DrawMolecule(QFrame* parent)
     //make it viewable
     QLabel* newLabel = new QLabel(parent);
     newLabel->setPixmap(*pix);
-    delete pix;
     newLabel->setAlignment(Qt::AlignCenter);
     newLabel->setAttribute(Qt::WA_DeleteOnClose);
     newLabel->show();
+    delete pix;
 
     return newLabel;
 }

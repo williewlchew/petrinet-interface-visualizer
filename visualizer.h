@@ -32,6 +32,12 @@ class Visualizer : public QFrame
 
     public slots:
         void updateVisualizer();
+
+    protected:
+        void mousePressEvent(QMouseEvent *QEvent) override;
+        void dragEnterEvent(QDragEnterEvent *QEvent) override;
+        void dragMoveEvent(QDragMoveEvent *QEvent) override;
+        void dropEvent(QDropEvent *QEvent) override;
 };
 ////////////////////////////////////////////////////////////
 //// OLD CODE

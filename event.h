@@ -29,6 +29,7 @@ class Event
         //Visual
         QLabel* DrawEvent(QFrame* parent);
         void editEvent(QFrame* parent);
+        void processDragAction(QPoint startPoint, QPoint endPoint, QFrame* parent);
 
         
     private:
