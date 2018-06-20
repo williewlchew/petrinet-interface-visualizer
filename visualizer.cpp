@@ -7,6 +7,7 @@ Visualizer::Visualizer(QWidget *parent, Event* eventPtr): QFrame(parent)
     setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
     setMaximumSize(16777215, 16777215);
+    setAcceptDrops(true);
 
     layout = new QVBoxLayout;
     setLayout(layout);
@@ -69,7 +70,7 @@ void Visualizer::mousePressEvent(QMouseEvent *QEvent)
     {
         QByteArray itemData;
         QDataStream dataStream(&itemData, QIODevice::WriteOnly);
-        dataStream << QPoint(QEvent->pos() - child->pos());
+        dataStream << QPoint(QEvent->pos());
 
         QMimeData *mimeData = new QMimeData;
         mimeData->setData("label/", itemData);
@@ -143,7 +144,7 @@ void Visualizer::dropEvent(QDropEvent *QEvent)
         QPoint startPosition;
         dataStream >> startPosition;
 
-        event->processDragAction(startPosition, QEvent->pos() - startPosition, this);
+        event->processDragAction(startPosition, QEvent->pos(), this);
 
         if (QEvent->source() == this)
         {

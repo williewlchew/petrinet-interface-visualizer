@@ -58,8 +58,6 @@ void Event::editEvent(QFrame* parent){
 
 void Event::processDragAction(QPoint startPoint, QPoint endPoint, QFrame* parent)
 {
-    qDebug() << "Workd" << startPoint << endPoint;
-
     QLabel* sLabel = new QLabel(parent);
     sLabel->setText(QString("Start"));
     sLabel->show();
@@ -69,6 +67,4 @@ void Event::processDragAction(QPoint startPoint, QPoint endPoint, QFrame* parent
     fLabel->setText(QString("Finish"));
     fLabel->show();
     fLabel->move(endPoint);
-
-    qDebug() << "Workd" << startPoint << endPoint;
 }

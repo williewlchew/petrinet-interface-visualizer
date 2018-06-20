@@ -35,6 +35,9 @@ class Event
     private:
         //Base Data
         std::string name;
+
+        //Visual Helpers
+
 };
 
 #endif // EVENT_H

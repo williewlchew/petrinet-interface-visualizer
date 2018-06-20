@@ -32,9 +32,11 @@ class MoleculeList
         //Base Data
         std::vector<Molecule*> list;
 
-        //Helpers
+        //Manipulation Helpers
         int GetIndex(Molecule* item);
 
+        //Visual Helpers
+        int PositionToVector(QPoint position);
 };
 
 #endif // MOLECULELIST_H
