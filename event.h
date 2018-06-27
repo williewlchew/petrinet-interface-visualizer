@@ -28,15 +28,15 @@ class Event
 
         //Visual
         QLabel* DrawEvent(QFrame* parent);
-        void editEvent(QFrame* parent);
-        void processDragAction(QPoint startPoint, QPoint endPoint, QFrame* parent);
+        void Edit(QFrame* parent);
+        void processDragAction(QLabel* startPtr, QPoint endPoint, QFrame* parent);
 
         
     private:
         //Base Data
         std::string name;
 
-        //Visual Helpers
+        VisualEditor* editor;
 
 };
 

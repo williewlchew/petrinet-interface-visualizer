@@ -32,7 +32,8 @@ SOURCES += \
     molecule.cpp \
     moleculelist.cpp \
     event.cpp \
-    eventlist.cpp
+    eventlist.cpp \
+    listlabellink.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -41,7 +42,8 @@ HEADERS += \
     molecule.h \
     moleculelist.h \
     event.h \
-    eventlist.h
+    eventlist.h \
+    listlabellink.h
 
 FORMS += \
         mainwindow.ui \

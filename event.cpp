@@ -43,28 +43,16 @@ QLabel* Event::DrawEvent(QFrame* parent)
     return newLabel;
 }
 
-void Event::editEvent(QFrame* parent){
+void Event::Edit(QFrame* parent){
 
-//    //***OPTIMIZE FOR EVENTS
-
-//    //makes a second dialogbox
-//    VisualEditor* newEditor = new VisualEditor(parent);
-//    newEditor->fillForm();//fill in the box with current information
-//    newEditor->show();
-
-//    //connect the save button with updateMolecule() ****WIP
-//    connect(newEditor, SIGNAL(changedId()), parent, SLOT(updateEvent()));
+//    editor = new VisualEditor(parent);
+//    editor->fillForm(this);
 }
 
-void Event::processDragAction(QPoint startPoint, QPoint endPoint, QFrame* parent)
+void Event::processDragAction(QLabel* startPtr, QPoint endPoint, QFrame* parent)
 {
-    QLabel* sLabel = new QLabel(parent);
-    sLabel->setText(QString("Start"));
-    sLabel->show();
-    sLabel->move(startPoint);
-
-    QLabel* fLabel = new QLabel(parent);
-    fLabel->setText(QString("Finish"));
-    fLabel->show();
-    fLabel->move(endPoint);
+    if(inputs.IsIn(startPtr))
+    {
+        inputs.Move(startPtr, endPoint);
+    }
 }

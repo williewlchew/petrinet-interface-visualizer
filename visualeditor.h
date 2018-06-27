@@ -9,38 +9,39 @@
 #define VISUALEDITOR_H
 
 #include <QDialog>
+#include <QtWidgets>
+#include <iostream>
+#include <vector>
 
+//////////////////////////////////////////////
 namespace Ui {
 class VisualEditor;
 }
 
 class VisualEditor : public QDialog
 {
-//    Q_OBJECT
+    Q_OBJECT
 
-//public:
+    public:
 
-//    //Attributes
-//    Molecule* rootMolecule;
-//    std::string nameField;
+        //Attributes
+        std::string nameField;
 
-//    //constructors
-//    VisualEditor(QWidget *parent = 0, Molecule* rootMol = nullptr);
-//    ~VisualEditor();
+        //constructors
+        VisualEditor(QWidget *parent, std::vector<std::string> incomingData);
+        virtual ~VisualEditor();
 
-//    void fillForm();
-//    QPushButton* getSaveButton();
+        void fillForm();
+        std::vector<std::string> data;
+        QPushButton* saveButton;
 
-//signals:
-//    void changedId();
 
-//private slots:
-//    void on_MolSaveButton_clicked();
+    private:
+        QVBoxLayout* layout;
+        std::vector<std::string> fieldValues;
+        void AddField(std::string name, std::string value);
 
-//    void on_MolNameEdit_textEdited(const QString &arg1);
-
-//private:
-    Ui::VisualEditor *ui;
+        Ui::VisualEditor *ui;
 };
 
 #endif // VISUALEDITOR_H

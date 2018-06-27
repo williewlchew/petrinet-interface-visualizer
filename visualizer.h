@@ -26,6 +26,9 @@ class Visualizer : public QFrame
     private:
         Event* event;
         QVBoxLayout *layout;
+        QBoxLayout* inputList;
+        QBoxLayout* outputList;
+        QLabel* eventLabel;
 
         //helper methods
         void clearVisualizer();
@@ -40,66 +43,5 @@ class Visualizer : public QFrame
         void dropEvent(QDropEvent *QEvent) override;
 };
 ////////////////////////////////////////////////////////////
-//// OLD CODE
-//class VisualMolecule : public QLabel {
-//    Q_OBJECT
-
-//    public :
-//        //constuctors
-//        VisualMolecule(QWidget* parent);
-//        VisualMolecule(QWidget* parent, Molecule* root);
-//        virtual ~VisualMolecule();
-
-//        //getter
-//        Molecule* getRoot();
-//        void setIsMovable(bool moveInput);
-//        bool getIsMoveable();
-
-//    private:
-//        //attributes
-//        Molecule* rootMolecule;
-//        bool isMovable;
-
-//    public slots:
-//        void updateMolecule();
-//};
-
-//class QDragEnterEvent;
-//class QDropEvent;
-
-//class Visualizer : public QFrame
-//{
-//public:
-
-//    //attributes
-//    Events* rootEvent; //~used to read in the molecules
-//    VisualMolecule* visualEvent;
-
-//    //constructor
-//    Visualizer();
-//    Visualizer(QWidget *parent = nullptr, Events* eventPtr = nullptr);
-//    virtual ~Visualizer();
-
-//    //methods
-//    VisualMolecule* newMolecule();
-//    VisualMolecule* newMolecule(Molecule* mol);
-//    void LoadNewEvent(Events* newEvent);
-
-//private:
-
-//    //attributes
-//    Molecule* draggedMolecule;
-
-//    //methods
-//    void editMolecule(VisualMolecule* mol);
-//    void editEvent();
-//    void updateEvent();
-
-//protected:
-//    void dragEnterEvent(QDragEnterEvent *event) override;
-//    void dragMoveEvent(QDragMoveEvent *event) override;
-//    void dropEvent(QDropEvent *event) override;
-//    void mousePressEvent(QMouseEvent *event) override;
-//};
 
 #endif //VISUALIZER_H

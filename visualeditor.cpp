@@ -4,34 +4,35 @@
 /*
  * Edits a molecule
  */
-//VisualEditor::VisualEditor(QWidget *parent, Molecule* rootMol) : QDialog(parent), ui(new Ui::VisualEditor)
-//{
-//    //initialize variables
-//    nameField = "";
-//    rootMolecule = rootMol;
+VisualEditor::VisualEditor(QWidget *parent, std::vector<std::string> incomingData) : QDialog(parent), ui(new Ui::VisualEditor)
+{
+    //initialize variables
+    layout = new QVBoxLayout(this);
+    setLayout(layout);
+    data = incomingData;
 
-//    ui->setupUi(this);
-//}
+    fillForm();
+    ui->setupUi(this);
 
-//VisualEditor::~VisualEditor()
-//{
-//    delete ui;
-//}
+    this->show();
+}
 
-////fill in form with molecule info
-//void VisualEditor::fillForm(){
+VisualEditor::~VisualEditor()
+{
+    delete ui;
+}
 
-//    /**
-//     * GET CODE TO READ AND WRITE OFF JSON FILE DATA
-//     * MAKE THE FORM OFF OF THE JSON DATA
-//     */
+//fill in form with molecule info
+void VisualEditor::fillForm(){
+    //temporary
+    AddField("name" , data[0]);
+    AddField("color", data[1]);
 
-//    ui->MolNameEdit->setText(QString::fromStdString(rootMolecule->getName()));
-//}
-
-//QPushButton* VisualEditor::getSaveButton(){
-//    return ui->MolSaveButton;
-//}
+    QPushButton* button = new QPushButton(this);
+    button->setText("Save");
+    saveButton = button;
+    layout->addWidget(button);
+}
 
 //void VisualEditor::on_MolSaveButton_clicked()
 //{
@@ -43,3 +44,17 @@
 //{
 //    nameField = arg1.toUtf8().constData();;
 //}
+
+void VisualEditor::AddField(std::string name, std::string value)
+{
+    QLabel* nameLab = new QLabel(this);
+    nameLab->setText(QString::fromStdString(name));
+    QLineEdit* field = new QLineEdit(this);
+    field->setText(QString::fromStdString(value));
+    QHBoxLayout* newGroup = new QHBoxLayout;
+    newGroup->addWidget(nameLab);
+    newGroup->addWidget(field);
+
+    layout->addItem(newGroup);
+    fieldValues.push_back(value);
+}

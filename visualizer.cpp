@@ -13,7 +13,13 @@ Visualizer::Visualizer(QWidget *parent, Event* eventPtr): QFrame(parent)
     setLayout(layout);
 
     event = eventPtr;
-    updateVisualizer();
+
+    inputList = event->inputs.DrawMoleculeList(this);
+    layout->addItem(inputList);
+    eventLabel = event->DrawEvent(this);
+    layout->addWidget(eventLabel);
+    outputList = event->outputs.DrawMoleculeList(this);
+    layout->addItem(outputList);
 }
 
 Visualizer::~Visualizer()
@@ -23,26 +29,12 @@ Visualizer::~Visualizer()
 
 void Visualizer::updateVisualizer()
 {
-    clearVisualizer();
 
-    QBoxLayout* inputList = event->inputs.DrawMoleculeList(this);
-    QLabel* eventLabel = event->DrawEvent(this);
-    QBoxLayout* outputList = event->outputs.DrawMoleculeList(this);
-
-    //move them to the optimal spots
-    layout->addItem(inputList);
-    layout->addWidget(eventLabel);
-    layout->addItem(outputList);
 }
 
 void Visualizer::clearVisualizer()
 {
-    QLayoutItem* item;
-    while ( ( item = layout->takeAt( 0 ) ) != NULL )
-    {
-        delete item->widget();
-        delete item;
-    }
+
 }
 
 void Visualizer::mousePressEvent(QMouseEvent *QEvent)
@@ -54,17 +46,17 @@ void Visualizer::mousePressEvent(QMouseEvent *QEvent)
     {
         return;
     }
-//    FOR LATER
-//    //rightclicked on an object
-//    else if (event->button()==Qt::RightButton) {
-//        if(!child->rootMolecule){
-//            editEvent();
-//        }
-//        else{
-//            editMolecule(child);
-//            child->show();
-//        }
-//    }
+
+    //rightclicked on an object
+    else if (QEvent->button()==Qt::RightButton) {
+        if(!event->inputs.Edit(child,this))
+        {
+            if(!event->outputs.Edit(child,this))
+            {
+                event->Edit(this);
+            }
+        }
+    }
 
     else
     {
@@ -90,7 +82,8 @@ void Visualizer::mousePressEvent(QMouseEvent *QEvent)
         //child->setPixmap(tempPixmap);
 
         if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction)
-            child->close();
+            //child->close();
+            qDebug() << "boof";
         else
         {
             child->show();
@@ -144,7 +137,8 @@ void Visualizer::dropEvent(QDropEvent *QEvent)
         QPoint startPosition;
         dataStream >> startPosition;
 
-        event->processDragAction(startPosition, QEvent->pos(), this);
+        QLabel* labPtr = static_cast<QLabel*>(childAt(startPosition));
+        event->processDragAction(labPtr, QEvent->pos(), this);
 
         if (QEvent->source() == this)
         {

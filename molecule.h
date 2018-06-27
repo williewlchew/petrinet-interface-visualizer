@@ -11,6 +11,8 @@
 
 #include <iostream>
 #include <QtWidgets>
+#include <vector>
+#include "visualeditor.h"
 
 ////////////////////////////////////////////////////////////////////
 class Molecule
@@ -26,10 +28,19 @@ class Molecule
 
         //Visual
         QLabel* DrawMolecule(QFrame* parent);
+        void EditMolecule(QFrame* parent);
+
+    signals:
+        void Changed();
+
+    private slots:
+        void updateMolecule();
 
     private:
        //Base Data
-       std::string name;
+       std::vector<std::string> attributes;
+
+       VisualEditor* editor;
 
 
 };
