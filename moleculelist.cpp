@@ -28,6 +28,12 @@ Molecule* MoleculeList::Get(std::string name)
     return nullptr;
 }
 
+Molecule* MoleculeList::Get(QLabel* item)
+{
+    int index = GetIndex(item);
+    return list[index];
+}
+
 Molecule* MoleculeList::Get(int index)
 {
     return list[index];
@@ -38,24 +44,37 @@ void MoleculeList::Push(Molecule* item)
     list.push_back(item);
 }
 
+void MoleculeList::Push(Molecule* item, bool isInput)
+{
+    list.push_back(item);
+    if(isInput)
+        item->setColor(1);
+    else if(!isInput)
+    {
+        item->setColor(2);
+    }
+}
+
 void MoleculeList::Pop(Molecule* item)
 {
     int removeIndex = GetIndex(item);
     list.erase(list.begin() + removeIndex);
-    delete item;
 }
 
 void MoleculeList::Pop(QLabel* item)
 {
-//    int removeIndex = GetIndex(LLLink->GetMol(item));
-//    list.erase(list.begin() + removeIndex);
-//    LLLink->Remove(item);
-//    delete item;
+    int removeIndex = GetIndex(item);
+    list.erase(list.begin() + removeIndex);
 }
 
 /*
  * User Input
  */
+
+void MoleculeList::Insert(Molecule* item, int position)
+{
+    list.insert(list.begin() + position, item);
+}
 
 bool MoleculeList::Edit(QLabel* label, QFrame *parent)
 {
@@ -66,11 +85,6 @@ bool MoleculeList::Edit(QLabel* label, QFrame *parent)
         return true;
     }
     else return false;
-
-}
-
-void MoleculeList::Insert(QLabel* item, QPoint position)
-{
 
 }
 
@@ -96,7 +110,6 @@ void MoleculeList::Move(QLabel* item, QPoint position)
             list.erase(list.begin() + moveIndex + 1);
         else list.erase(list.begin() + moveIndex);
     }
-    DrawMoleculeList();
 }
 
 int MoleculeList::GetIndex(Molecule* item)
@@ -112,7 +125,6 @@ int MoleculeList::GetIndex(Molecule* item)
 
 int MoleculeList::GetIndex(QLabel* item)
 {
-    qDebug() << labels.size();
     for(int i = 0; i < labels.size(); i++)
     {
         if(labels[i] == item){
@@ -153,8 +165,7 @@ QHBoxLayout* MoleculeList::DrawMoleculeList(QFrame* parent)
     for(Molecule* mol : list)
     {
         QLabel* molLabel = mol->DrawMolecule(parent);
-        labels.push_back(molLabel);
-        connect(mol, SIGNAL(Changed()), this, SLOT(DrawMoleculeList()));
+        labels.push_back(molLabel);;
         visualLayout->addWidget(molLabel);
     }
 

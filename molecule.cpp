@@ -1,9 +1,21 @@
 #include "molecule.h"
+#include "visualeditor.h"
+#include "attribute.h"
+
+/////////////////////////////////////////////////////////////////
 
 Molecule::Molecule()
 {
-    attributes.push_back("New Molecule");
-    attributes.push_back("blank");
+    attributes = new AttributeList();
+
+    Attribute* newName = new Attribute(Attribute::STRING, "name");
+    newName->setTextData(std::string("New Molecule"));
+
+    Attribute* newColor = new Attribute(Attribute::COLOR, "color");
+    newColor->setColorData(Qt::green);
+
+    attributes->Push(newName);
+    attributes->Push(newColor);
 }
 
 Molecule::~Molecule()
@@ -14,12 +26,12 @@ Molecule::~Molecule()
 //Name getter and setter
 void Molecule::setName(std::string nameInput)
 {
-    attributes[0] = nameInput;
+    attributes->Get("name")->setTextData(std::string(nameInput));
 }
 
 std::string Molecule::getName()
 {
-    return attributes[0];
+    return attributes->Get("name")->GetText();
 }
 
 QLabel* Molecule::DrawMolecule(QFrame* parent)
@@ -31,8 +43,9 @@ QLabel* Molecule::DrawMolecule(QFrame* parent)
 
     QPainter painter;
     painter.begin(pix);
+    painter.setBrush(getColor());
     painter.drawEllipse(0,0,150,100);
-    painter.drawText(pix->rect(),Qt::AlignCenter, QString::fromStdString(attributes[0]));
+    painter.drawText(pix->rect(),Qt::AlignCenter, QString::fromStdString(getName()));
     painter.end();
 
     //make it viewable
@@ -50,11 +63,41 @@ QLabel* Molecule::DrawMolecule(QFrame* parent)
 void Molecule::EditMolecule(QFrame* parent)
 {
     editor = new VisualEditor(parent, attributes);
-    connect(*editor->saveButton, SIGNAL(released()), this, SLOT(updateMolecule()));
+    //connect(editor, SIGNAL(released()), this, SLOT(updateMolecule()));
 }
 
 void Molecule::updateMolecule()
 {
-    attributes = editor->data;
-    Changed();
+    //attributes = editor->attributes;
+    //Changed();
+}
+
+void Molecule::setColor(int input)
+{
+    QColor currentColor;
+
+    //very temporary
+    if(input == 0)
+    {
+        currentColor = Qt::white;
+    }
+    else if(input == 1)
+    {
+        currentColor = Qt::red;
+    }
+    else if(input == 2)
+    {
+        currentColor = Qt::blue;
+    }
+    else
+    {
+        currentColor = Qt::darkGreen;
+    }
+
+    attributes->Get("color")->setColorData(currentColor);
+}
+
+QColor Molecule::getColor()
+{
+    return attributes->Get("color")->GetColor();
 }

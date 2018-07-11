@@ -11,6 +11,7 @@
 #include <QDialog>
 #include <QtWidgets>
 #include <iostream>
+#include "attributelist.h"
 #include <vector>
 
 //////////////////////////////////////////////
@@ -28,11 +29,11 @@ class VisualEditor : public QDialog
         std::string nameField;
 
         //constructors
-        VisualEditor(QWidget *parent, std::vector<std::string> incomingData);
+        VisualEditor(QWidget* parent, AttributeList* incomingData);
         virtual ~VisualEditor();
 
         void fillForm();
-        std::vector<std::string> data;
+        AttributeList* attributes;
         QPushButton* saveButton;
 
 

@@ -22,22 +22,25 @@ class MoleculeList
 
         //Manipulation Methdods
         Molecule* Get(std::string name);
+        Molecule* Get(QLabel* item);
         Molecule* Get(int index);
         void Push(Molecule* item);
+        void Push(Molecule* item, bool isInput);
         void Pop(Molecule* item);
 
         bool IsIn(QLabel* item);
 
         //When label is moved in visualizer
         void Pop(QLabel* item);
-        void Insert(QLabel* item, QPoint position);
+        void Insert(Molecule* item, int position);
         void Move(QLabel* item, QPoint position);
 
         //Visual
         QHBoxLayout* DrawMoleculeList(QFrame* parent);
+        int PositionToVector(QPoint position);
         bool Edit(QLabel* label, QFrame* parent);
 
-   private slots:
+   public slots:
         QHBoxLayout* DrawMoleculeList();
 
    private:
@@ -55,7 +58,6 @@ class MoleculeList
 
         //Visual Helpers
         //ListLabelLink* LLLink;
-        int PositionToVector(QPoint position);
         void ClearLabelList();
 };
 

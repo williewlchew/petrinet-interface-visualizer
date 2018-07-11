@@ -4,12 +4,12 @@
 /*
  * Edits a molecule
  */
-VisualEditor::VisualEditor(QWidget *parent, std::vector<std::string> incomingData) : QDialog(parent), ui(new Ui::VisualEditor)
+VisualEditor::VisualEditor(QWidget *parent, AttributeList *incomingData) : QDialog(parent), ui(new Ui::VisualEditor)
 {
     //initialize variables
     layout = new QVBoxLayout(this);
     setLayout(layout);
-    data = incomingData;
+    attributes = incomingData;
 
     fillForm();
     ui->setupUi(this);
@@ -25,8 +25,9 @@ VisualEditor::~VisualEditor()
 //fill in form with molecule info
 void VisualEditor::fillForm(){
     //temporary
-    AddField("name" , data[0]);
-    AddField("color", data[1]);
+//    AddField("name" , data[0]);
+//    AddField("color", data[1]);
+    attributes->Display(this, layout, fieldValues);
 
     QPushButton* button = new QPushButton(this);
     button->setText("Save");

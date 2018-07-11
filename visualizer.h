@@ -37,6 +37,7 @@ class Visualizer : public QFrame
         void updateVisualizer();
 
     protected:
+        void ShowContextMenu(const QPoint &pos, QLabel* child);
         void mousePressEvent(QMouseEvent *QEvent) override;
         void dragEnterEvent(QDragEnterEvent *QEvent) override;
         void dragMoveEvent(QDragMoveEvent *QEvent) override;

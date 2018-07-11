@@ -13,6 +13,7 @@
 #include <QtWidgets>
 #include <vector>
 #include "visualeditor.h"
+#include "attributelist.h"
 
 ////////////////////////////////////////////////////////////////////
 class Molecule
@@ -22,9 +23,11 @@ class Molecule
         Molecule();
         ~Molecule();
 
-        //Name Methods
+        //Base Info
         void setName(std::string nameInput);
         std::string getName();
+        void setColor(int colorIndex);
+        QColor getColor();
 
         //Visual
         QLabel* DrawMolecule(QFrame* parent);
@@ -38,7 +41,8 @@ class Molecule
 
     private:
        //Base Data
-       std::vector<std::string> attributes;
+       //std::vector<std::string> attributes;
+       AttributeList* attributes;
 
        VisualEditor* editor;
 

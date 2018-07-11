@@ -8,6 +8,9 @@ Visualizer::Visualizer(QWidget *parent, Event* eventPtr): QFrame(parent)
     setFrameStyle(QFrame::Sunken | QFrame::StyledPanel);
     setMaximumSize(16777215, 16777215);
     setAcceptDrops(true);
+    this->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(ShowContextMenu(const QPoint &)));
 
     layout = new QVBoxLayout;
     setLayout(layout);
@@ -15,11 +18,11 @@ Visualizer::Visualizer(QWidget *parent, Event* eventPtr): QFrame(parent)
     event = eventPtr;
 
     inputList = event->inputs.DrawMoleculeList(this);
-    layout->addItem(inputList);
+    layout->addLayout(inputList);
     eventLabel = event->DrawEvent(this);
     layout->addWidget(eventLabel);
     outputList = event->outputs.DrawMoleculeList(this);
-    layout->addItem(outputList);
+    layout->addLayout(outputList);
 }
 
 Visualizer::~Visualizer()
@@ -37,6 +40,23 @@ void Visualizer::clearVisualizer()
 
 }
 
+void Visualizer::ShowContextMenu(const QPoint &pos, QLabel* child)
+{
+   QMenu contextMenu(tr("Context menu"), this);
+
+   QAction action1("Edit item", this);
+   connect(&action1, SIGNAL(triggered()), this, SLOT(event->inputs.Edit(child,this)));
+   contextMenu.addAction(&action1);
+   QAction action2("Change color", this);
+   connect(&action2, SIGNAL(triggered()), this, SLOT(event->inputs.Edit(child,this)));
+   contextMenu.addAction(&action2);
+   QAction action3("Move", this);
+   connect(&action3, SIGNAL(triggered()), this, SLOT(event->inputs.Edit(child,this)));
+   contextMenu.addAction(&action3);
+
+   contextMenu.exec(mapToGlobal(pos));
+}
+
 void Visualizer::mousePressEvent(QMouseEvent *QEvent)
 {
     QLabel* child = static_cast<QLabel*>(childAt(QEvent->pos()));
@@ -49,13 +69,14 @@ void Visualizer::mousePressEvent(QMouseEvent *QEvent)
 
     //rightclicked on an object
     else if (QEvent->button()==Qt::RightButton) {
-        if(!event->inputs.Edit(child,this))
-        {
-            if(!event->outputs.Edit(child,this))
-            {
-                event->Edit(this);
-            }
-        }
+//        if(!event->inputs.Edit(child,this))
+//        {
+//            if(!event->outputs.Edit(child,this))
+//            {
+//                event->Edit(this);
+//            }
+//        }
+        ShowContextMenu(QEvent->pos(), child);
     }
 
     else
@@ -73,17 +94,11 @@ void Visualizer::mousePressEvent(QMouseEvent *QEvent)
         drag->setPixmap(pixmap);
         drag->setHotSpot(QEvent->pos() - child->pos());
 
-//        QPixmap tempPixmap = pixmap;
-//        QPainter painter;
-//        painter.begin(&tempPixmap);
-//        painter.fillRect(pixmap.rect(), QColor(250, 250, 250, 150));
-//        painter.end();
-
         //child->setPixmap(tempPixmap);
 
         if (drag->exec(Qt::CopyAction | Qt::MoveAction, Qt::CopyAction) == Qt::MoveAction)
             //child->close();
-            qDebug() << "boof";
+            qDebug() << "";
         else
         {
             child->show();

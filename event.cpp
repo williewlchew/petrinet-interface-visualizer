@@ -44,15 +44,48 @@ QLabel* Event::DrawEvent(QFrame* parent)
 }
 
 void Event::Edit(QFrame* parent){
-
 //    editor = new VisualEditor(parent);
 //    editor->fillForm(this);
 }
 
 void Event::processDragAction(QLabel* startPtr, QPoint endPoint, QFrame* parent)
 {
-    if(inputs.IsIn(startPtr))
-    {
-        inputs.Move(startPtr, endPoint);
-    }
+      if(startPtr->pos().y() < parent->frameRect().height()/2 && endPoint.y() < parent->frameRect().height()/2)
+      {
+          //movement in input
+          qDebug() << "1";
+          inputs.Move(startPtr, endPoint);
+      }
+
+      else if(startPtr->pos().y() < parent->frameRect().height()/2 && endPoint.y() > parent->frameRect().height()/2)
+      {
+          //input to output
+          qDebug() << "2";
+          int destination = outputs.PositionToVector(endPoint);
+          outputs.Insert(inputs.Get(startPtr), destination);
+          inputs.Pop(startPtr);
+      }
+
+      else if(startPtr->pos().y() > parent->frameRect().height()/2 && endPoint.y() < parent->frameRect().height()/2)
+      {
+          //output to input
+          qDebug() << "3";
+          int destination = inputs.PositionToVector(endPoint);
+          inputs.Insert(outputs.Get(startPtr), destination);
+          outputs.Pop(startPtr);
+      }
+
+      else if(startPtr->pos().y() > parent->frameRect().height()/2 && endPoint.y() > parent->frameRect().height()/2)
+      {
+          //movement in output
+          qDebug() << startPtr->pos().y() << " " <<  parent->frameRect().y()/2;
+          outputs.Move(startPtr, endPoint);
+      }
+
+//    if(inputs.IsIn(startPtr))
+//    {
+//        inputs.Move(startPtr, endPoint);
+//    }
+      inputs.DrawMoleculeList();
+      outputs.DrawMoleculeList();
 }
