@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include <QtWidgets>
+#include <QObject>
 
-
-class Attribute
+class Attribute : public QObject
 {
     public:
         enum type {STRING, COLOR};
@@ -21,12 +21,17 @@ class Attribute
         QColor GetColor();
 
         //visual
-        QHBoxLayout Display(QDialog* parent, QBoxLayout* layout, std::vector<std::string> fieldValues);
+        void Display(QDialog* parent, QBoxLayout* layout, std::vector<std::string> fieldValues);
 
-   public slots:
-        void setTextData(std::string stringInput);
-        void setColorData(QColor colorInput);
+        void setData(std::string input);
+        void setData(QColor input);
 
+    Q_OBJECT
+    signals:
+        void VisualDataUpdated();
+
+    public slots:
+        void editedAttribute();
 
     private:
         //Base data
@@ -34,8 +39,10 @@ class Attribute
         type attributeType;
 
         //Data
-        std::string stringData;
+        std::string data;
         QColor* colorData;
+
+        QLineEdit* field;
 
 };
 

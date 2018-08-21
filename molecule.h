@@ -12,12 +12,16 @@
 #include <iostream>
 #include <QtWidgets>
 #include <vector>
+#include <QObject>
+
 #include "visualeditor.h"
 #include "attributelist.h"
 
 ////////////////////////////////////////////////////////////////////
-class Molecule
+class Molecule : public QObject
 {
+    Q_OBJECT
+
     public:
         //Constructors
         Molecule();
@@ -26,22 +30,22 @@ class Molecule
         //Base Info
         void setName(std::string nameInput);
         std::string getName();
-        void setColor(int colorIndex);
+        void setColor(int input);
         QColor getColor();
 
         //Visual
+        QLabel* label;
         QLabel* DrawMolecule(QFrame* parent);
         void EditMolecule(QFrame* parent);
 
     signals:
         void Changed();
 
-    private slots:
-        void updateMolecule();
+    public slots:
+        void updateMoleculeLabel();
 
     private:
        //Base Data
-       //std::vector<std::string> attributes;
        AttributeList* attributes;
 
        VisualEditor* editor;

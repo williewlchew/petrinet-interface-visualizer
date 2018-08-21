@@ -10,25 +10,27 @@
 
 #include <vector>
 #include "molecule.h"
-//#include "listlabellink.h"
 
-class MoleculeList
+class MoleculeList : public QObject
 {
-
     public:
         //Constructor
         MoleculeList();
         ~MoleculeList();
 
-        //Manipulation Methdods
+        //Getters
         Molecule* Get(std::string name);
         Molecule* Get(QLabel* item);
         Molecule* Get(int index);
+        std::vector<QPoint*> GetLabelPoints();
+
+        //Manipulation Methdods
         void Push(Molecule* item);
         void Push(Molecule* item, bool isInput);
         void Pop(Molecule* item);
 
         bool IsIn(QLabel* item);
+        bool IsIn(Molecule* item);
 
         //When label is moved in visualizer
         void Pop(QLabel* item);
@@ -40,6 +42,7 @@ class MoleculeList
         int PositionToVector(QPoint position);
         bool Edit(QLabel* label, QFrame* parent);
 
+   Q_OBJECT
    public slots:
         QHBoxLayout* DrawMoleculeList();
 
@@ -57,7 +60,6 @@ class MoleculeList
         int GetIndex(QLabel* item);
 
         //Visual Helpers
-        //ListLabelLink* LLLink;
         void ClearLabelList();
 };
 

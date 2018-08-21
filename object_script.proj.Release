@@ -1,0 +1,16 @@
+INPUT(
+./release\main.o
+./release\mainwindow.o
+./release\visualizer.o
+./release\visualeditor.o
+./release\molecule.o
+./release\moleculelist.o
+./release\event.o
+./release\eventlist.o
+./release\attribute.o
+./release\attributelist.o
+./release\qrc_proj.o
+./release\moc_mainwindow.o
+./release\moc_visualeditor.o
+./release\moc_attribute.o
+);

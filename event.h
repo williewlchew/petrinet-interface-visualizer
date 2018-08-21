@@ -10,31 +10,43 @@
 
 #include <iostream>
 #include <moleculelist.h>
+#include <QObject>
 /////////////////////////////////////////////////////
-class Event
+class Event : public QObject
 {
+    Q_OBJECT
+
     public:
         //Constructor
         Event();
         ~Event();
-
         
         //Base Data
         MoleculeList inputs;
         MoleculeList outputs;
-        
+
+        //Getters and Setters
         void setName(std::string nameInput);
         std::string getName();
+        std::vector<QPoint*> getMolLabelPoints();
 
         //Visual
+        QLabel* label;
+
         QLabel* DrawEvent(QFrame* parent);
         void Edit(QFrame* parent);
         void processDragAction(QLabel* startPtr, QPoint endPoint, QFrame* parent);
 
+        //Context menu variables
+        Molecule* menuMolecule;
+        QPoint* menuPosition;
+
+    private slots:
+        void updateEventLabel();
         
     private:
         //Base Data
-        std::string name;
+        AttributeList* attributes;
 
         VisualEditor* editor;
 

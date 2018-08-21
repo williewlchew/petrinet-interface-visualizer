@@ -2,7 +2,6 @@
 
 MoleculeList::MoleculeList()
 {
-    //LLLink = new ListLabelLink();
     visualLayout = nullptr;
     currentParent = nullptr;
 }
@@ -31,7 +30,9 @@ Molecule* MoleculeList::Get(std::string name)
 Molecule* MoleculeList::Get(QLabel* item)
 {
     int index = GetIndex(item);
-    return list[index];
+    if(index != -1)
+        return list[index];
+    else return nullptr;
 }
 
 Molecule* MoleculeList::Get(int index)
@@ -39,9 +40,24 @@ Molecule* MoleculeList::Get(int index)
     return list[index];
 }
 
+std::vector<QPoint*> MoleculeList::GetLabelPoints()
+{
+    std::vector<QPoint*> ret;
+    for(QLabel* lab : labels)
+    {
+        QPoint* point = new QPoint(lab->pos().y(), lab->pos().x());
+        ret.push_back(point);
+    }
+    return ret;
+}
+
 void MoleculeList::Push(Molecule* item)
 {
     list.push_back(item);
+    if(item->label)
+    {
+        labels.push_back(item->label);
+    }
 }
 
 void MoleculeList::Push(Molecule* item, bool isInput)
@@ -93,6 +109,17 @@ bool MoleculeList::IsIn(QLabel* item)
     for(QLabel* lab : labels)
     {
         if(lab == item)
+            return true;
+    }
+
+    return false;
+}
+
+bool MoleculeList::IsIn(Molecule* item)
+{
+    for(Molecule* mol : list)
+    {
+        if(mol == item)
             return true;
     }
 
@@ -157,7 +184,6 @@ int MoleculeList::PositionToVector(QPoint position)
 QHBoxLayout* MoleculeList::DrawMoleculeList(QFrame* parent)
 {
     visualLayout = new QHBoxLayout(parent);
-    //visualLayout->SetNoConstraint();
     currentParent = parent;
 
     ClearLabelList();
@@ -165,7 +191,7 @@ QHBoxLayout* MoleculeList::DrawMoleculeList(QFrame* parent)
     for(Molecule* mol : list)
     {
         QLabel* molLabel = mol->DrawMolecule(parent);
-        labels.push_back(molLabel);;
+        labels.push_back(molLabel);
         visualLayout->addWidget(molLabel);
     }
 
@@ -182,6 +208,7 @@ QHBoxLayout* MoleculeList::DrawMoleculeList()
         labels.push_back(molLabel);
         visualLayout->addWidget(molLabel);
     }
+
     return visualLayout;
 }
 

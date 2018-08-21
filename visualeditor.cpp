@@ -24,9 +24,6 @@ VisualEditor::~VisualEditor()
 
 //fill in form with molecule info
 void VisualEditor::fillForm(){
-    //temporary
-//    AddField("name" , data[0]);
-//    AddField("color", data[1]);
     attributes->Display(this, layout, fieldValues);
 
     QPushButton* button = new QPushButton(this);
@@ -34,17 +31,6 @@ void VisualEditor::fillForm(){
     saveButton = button;
     layout->addWidget(button);
 }
-
-//void VisualEditor::on_MolSaveButton_clicked()
-//{
-//    rootMolecule->setName(nameField);
-//    changedId();
-//}
-
-//void VisualEditor::on_MolNameEdit_textEdited(const QString &arg1)
-//{
-//    nameField = arg1.toUtf8().constData();;
-//}
 
 void VisualEditor::AddField(std::string name, std::string value)
 {

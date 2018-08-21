@@ -1,6 +1,7 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource prefix="">
-   <file>snip1.png</file>
-   <file>snip2.png</file>
-</qresource>
+<RCC>
+    <qresource prefix="/">
+        <file>snip1.png</file>
+        <file>snip2.png</file>
+        <file>save.json</file>
+    </qresource>
 </RCC>
