@@ -1,5 +1,5 @@
 # Petrinet Interface Visualizer
-The Petrinet Interface Visualizer is a programs that allows users to draw and edit petri net models. The program was 
+The Petrinet Interface Visualizer is a program that allows users to draw and edit petri net models. The program was 
 written in C++ and built with QT 5.11.
 
 # Vision
